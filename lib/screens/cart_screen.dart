@@ -6,6 +6,7 @@ import 'package:ecommerce/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -69,6 +70,12 @@ class _CartScreenState extends State<CartScreen> {
                       GestureDetector(
                         onTap: () {
                           cartProvider.cleanItems();
+                          toastification.show(
+                            style: ToastificationStyle.fillColored,
+                            context: context,
+                            title: Text("Cart cleared"),
+                            autoCloseDuration: Duration(seconds: 5),
+                          );
                         },
                         child: Container(
                           decoration: BoxDecoration(

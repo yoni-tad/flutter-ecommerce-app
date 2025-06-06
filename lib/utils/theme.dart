@@ -8,6 +8,7 @@ final lightTheme = ThemeData(
     bodyMedium: TextStyle(color: Colors.black),
     bodySmall: TextStyle(color: Colors.black),
   ),
+  sliderTheme: SliderThemeData(showValueIndicator: ShowValueIndicator.always),
 );
 
 final darkTheme = ThemeData(
@@ -18,4 +19,5 @@ final darkTheme = ThemeData(
     bodyMedium: TextStyle(color: Colors.white),
     bodySmall: TextStyle(color: Colors.white),
   ),
+  sliderTheme: SliderThemeData(showValueIndicator: ShowValueIndicator.always),
 );

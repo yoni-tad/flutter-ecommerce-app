@@ -1,12 +1,14 @@
 import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/provider/items_provider.dart';
 import 'package:ecommerce/provider/theme_provider.dart';
+import 'package:ecommerce/screens/filter_screen.dart';
 import 'package:ecommerce/screens/product_screen.dart';
 import 'package:ecommerce/widgets/item_card.dart';
 import 'package:ecommerce/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +18,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController _search = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -28,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final itemsProvider = Provider.of<ItemsProvider>(context);
+    final items = itemsProvider.items;
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -111,6 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(5.sp),
                               ),
                               child: TextField(
+                                controller: _search,
+                                onChanged:
+                                    (value) => {
+                                      if (value.isNotEmpty)
+                                        {itemsProvider.search(value)}
+                                      else
+                                        {itemsProvider.clearSearch()},
+                                    },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.search),
                                   prefixIconColor: theme.primaryColor,
@@ -131,6 +144,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(width: 10.w),
                           GestureDetector(
+                            onTap: () {
+                              if (!itemsProvider.isLoading) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FilterScreen(),
+                                  ),
+                                );
+                              }
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                 color: theme.scaffoldBackgroundColor,
@@ -184,8 +207,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   )
+                  : items.length == 0
+                  ? Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    child: Center(
+                      child: Text(
+                        'No result found',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ),
+                  )
                   : GridView.builder(
-                    itemCount: itemsProvider.items.length,
+                    itemCount: items.length,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -195,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       childAspectRatio: 1,
                     ),
                     itemBuilder: (context, index) {
-                      final item = itemsProvider.items[index];
+                      final item = items[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(

@@ -49,7 +49,9 @@ class CartProvider with ChangeNotifier {
 
   Future<void> cleanItems() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    await prefs.clear();
+    _cart.clear();
+    _totalPrice = 0.0;
     notifyListeners();
   }
 }
