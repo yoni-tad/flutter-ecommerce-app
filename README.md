@@ -1,6 +1,6 @@
 # eCommerce Flutter App
 
-Hello, this repository made for Tewanay Engineering Mobile Application Development Intenship practical exma purpose.
+Hello, this repository made for Tewanay Engineering Mobile Application Development Intenship practical exam purpose.
 
 ---
 
