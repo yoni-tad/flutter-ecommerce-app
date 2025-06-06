@@ -43,6 +43,7 @@ dependencies:
   chapasdk: ^0.0.8+1
   toastification: ^3.0.3
   circle_nav_bar: ^2.2.0
+  supabase_flutter: ^2.9.0
 
 dev_dependencies:
   flutter_test:

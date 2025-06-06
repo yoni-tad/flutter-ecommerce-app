@@ -1,6 +1,7 @@
 import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:ecommerce/screens/cart_screen.dart';
 import 'package:ecommerce/screens/home_screen.dart';
+import 'package:ecommerce/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,7 +14,7 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   int _currentIndex = 0;
-  final pages = [HomeScreen(), CartScreen()];
+  final pages = [HomeScreen(), CartScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {

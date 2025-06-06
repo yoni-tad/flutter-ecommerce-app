@@ -44,7 +44,7 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => DrawerWidget(),
@@ -178,10 +178,10 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                   ),
-              Column(
-                children: [
-                  cartProvider.totalPrice > 0
-                      ? Row(
+              cartProvider.totalPrice > 0
+                  ? Column(
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -199,91 +199,96 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                         ],
-                      )
-                      : SizedBox(),
-                  SizedBox(height: 5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Total',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
                       ),
-                      Text(
-                        '\$${cartProvider.totalPrice > 0 ? (cartProvider.totalPrice + 15).toStringAsFixed(2) : 0}',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      SizedBox(height: 5.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            '\$${cartProvider.totalPrice > 0 ? (cartProvider.totalPrice + 15).toStringAsFixed(2) : 0}',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) => ChapaNativePayment(
-                                amount: '100.00',
-                                currency: 'USD',
-                                email: 'customer@example.com',
-                                firstName: 'John',
-                                lastName: 'Doe',
-                                txRef:
-                                    'TX-${DateTime.now().millisecondsSinceEpoch}',
-                                title: 'Ecommerce Checkout',
-                                context: context,
-                                desc: 'Payment for items in cart',
-                                phone: '0900123456',
-                                publicKey:
-                                    'CHAPUBK_TEST-cpUaKk9QLa2XYIc0uALJPyO7KdnD1nyd',
-                                onPaymentFinished:
-                                    (p0, p1, p2) => {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => HomeScreen(),
-                                        ),
+                      GestureDetector(
+                        onTap: () {
+                          cartProvider.totalPrice > 0
+                              ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => ChapaNativePayment(
+                                        amount:
+                                            cartProvider.totalPrice.toString(),
+                                        currency: 'USD',
+                                        email: 'customer@example.com',
+                                        firstName: 'John',
+                                        lastName: 'Doe',
+                                        txRef:
+                                            'TX-${DateTime.now().millisecondsSinceEpoch}',
+                                        title: 'Ecommerce Checkout',
+                                        context: context,
+                                        desc: 'Payment for items in cart',
+                                        phone: '0900123456',
+                                        publicKey:
+                                            'CHAPUBK_TEST-cpUaKk9QLa2XYIc0uALJPyO7KdnD1nyd',
+                                        onPaymentFinished:
+                                            (p0, p1, p2) => {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (context) =>
+                                                          DrawerWidget(),
+                                                ),
+                                              ),
+                                            },
+                                        namedRouteFallBack: '',
                                       ),
-                                    },
-                                namedRouteFallBack: '',
-                              ),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: theme.primaryColor,
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Checkout',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: theme.textTheme.bodyLarge?.color,
-                                  fontSize: 13.sp,
                                 ),
+                              )
+                              : null;
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.h),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: theme.primaryColor,
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 12.h),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Checkout',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: theme.textTheme.bodyLarge?.color,
+                                      fontSize: 13.sp,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
+                    ],
+                  )
+                  : SizedBox(),
             ],
           ),
         ),

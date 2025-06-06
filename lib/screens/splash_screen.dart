@@ -1,10 +1,12 @@
 import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/provider/items_provider.dart';
 import 'package:ecommerce/screens/home_screen.dart';
+import 'package:ecommerce/screens/signin_screen.dart';
 import 'package:ecommerce/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,6 +16,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final status = Supabase.instance.client.auth.currentSession;
+
   @override
   void initState() {
     super.initState();
@@ -23,7 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
         Provider.of<CartProvider>(context, listen: false).getItems();
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => DrawerWidget()),
+          MaterialPageRoute(
+            builder:
+                (context) => status != null ? DrawerWidget() : SigninScreen(),
+          ),
         );
       }
     });
