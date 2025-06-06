@@ -22,7 +22,7 @@ class ItemsProvider with ChangeNotifier {
     _error = null;
     notifyListeners();
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 3));
 
     try {
       _items = await _repository.getItems();
