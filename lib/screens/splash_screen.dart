@@ -1,6 +1,10 @@
+import 'package:ecommerce/provider/cart_provider.dart';
+import 'package:ecommerce/provider/items_provider.dart';
 import 'package:ecommerce/screens/home_screen.dart';
+import 'package:ecommerce/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,9 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
       if (mounted) {
+        Provider.of<ItemsProvider>(context, listen: false).loadItems();
+        Provider.of<CartProvider>(context, listen: false).getItems();
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => DrawerWidget()),
         );
       }
     });

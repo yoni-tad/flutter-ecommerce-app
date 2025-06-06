@@ -3,6 +3,7 @@ import 'package:chapasdk/features/native-checkout/bloc/chapa_native_checkout_blo
 import 'package:chapasdk/features/native-checkout/chapa_native_payment.dart';
 import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/screens/home_screen.dart';
+import 'package:ecommerce/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,12 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DrawerWidget(),
+                            ),
+                          );
                         },
                         child: Container(
                           decoration: BoxDecoration(

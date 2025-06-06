@@ -1,6 +1,8 @@
+import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/provider/items_provider.dart';
 import 'package:ecommerce/provider/theme_provider.dart';
+import 'package:ecommerce/screens/cart_screen.dart';
 import 'package:ecommerce/screens/filter_screen.dart';
 import 'package:ecommerce/screens/product_screen.dart';
 import 'package:ecommerce/widgets/item_card.dart';
@@ -19,14 +21,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _search = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Provider.of<ItemsProvider>(context, listen: false).loadItems();
-    Provider.of<CartProvider>(context, listen: false).getItems();
-  }
 
   @override
   Widget build(BuildContext context) {
