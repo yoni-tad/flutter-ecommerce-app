@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/provider/items_provider.dart';
 import 'package:ecommerce/provider/theme_provider.dart';
 import 'package:ecommerce/screens/cart_screen.dart';
@@ -19,7 +20,9 @@ class _ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final itemProvider = Provider.of<ItemsProvider>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final item = itemProvider.items.where((item) => item.id == widget.id).first;
+    bool isExist = cartProvider.cart.any((item) => item.id == widget.id);
 
     return SafeArea(
       child: Scaffold(
@@ -62,19 +65,34 @@ class _ProductScreenState extends State<ProductScreen> {
                             ),
                           );
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: theme.textTheme.bodyLarge?.color!
-                                .withOpacity(0.05),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.h),
-                            child: Icon(
-                              Icons.shopping_cart,
-                              color: theme.primaryColor,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: theme.textTheme.bodyLarge?.color!
+                                    .withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.h),
+                                child: Icon(
+                                  Icons.shopping_cart,
+                                  color: theme.primaryColor,
+                                ),
+                              ),
                             ),
-                          ),
+                            Positioned(
+                              top: 0,
+                              right: -2,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                                child: Text(
+                                  cartProvider.cart.length.toString(),
+                                  style: TextStyle(color: theme.primaryColor),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -141,7 +159,11 @@ class _ProductScreenState extends State<ProductScreen> {
                 ],
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  isExist
+                      ? cartProvider.removeItem(item.id)
+                      : cartProvider.addItem(item);
+                },
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.h),
                   child: Container(
@@ -156,12 +178,14 @@ class _ProductScreenState extends State<ProductScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.add_shopping_cart,
+                            isExist
+                                ? Icons.remove_shopping_cart
+                                : Icons.add_shopping_cart,
                             color: theme.textTheme.bodyLarge?.color,
                           ),
                           SizedBox(width: 10.w),
                           Text(
-                            'Add to Cart',
+                            isExist ? 'Remove from cart' : 'Add to Cart',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: theme.textTheme.bodyLarge?.color,

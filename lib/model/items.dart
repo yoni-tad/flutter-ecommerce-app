@@ -28,6 +28,18 @@ class Items {
       rating: Rating.fromJson(json['rating']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'description': description,
+      'category': category,
+      'image': image,
+      'rating': rating.toJson(),
+    };
+  }
 }
 
 class Rating {
@@ -38,5 +50,9 @@ class Rating {
 
   factory Rating.fromJson(Map<String, dynamic> json) {
     return Rating(rate: (json['rate'] as num).toDouble(), count: json['count']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'rate': rate, 'count': count};
   }
 }

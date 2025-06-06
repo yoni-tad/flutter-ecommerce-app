@@ -1,3 +1,4 @@
+import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/provider/items_provider.dart';
 import 'package:ecommerce/provider/theme_provider.dart';
 import 'package:ecommerce/screens/product_screen.dart';
@@ -20,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     Provider.of<ItemsProvider>(context, listen: false).loadItems();
+    Provider.of<CartProvider>(context, listen: false).getItems();
   }
 
   @override
@@ -165,19 +167,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   : itemsProvider.error != null
                   ? Padding(
                     padding: EdgeInsets.symmetric(vertical: 30.h),
-                    child: Column(
-                      children: [
-                        Text('Fetch data failed, Please try again'),
-                        GestureDetector(
-                          onTap: () {
-                            Provider.of<ItemsProvider>(
-                              context,
-                              listen: false,
-                            ).loadItems();
-                          },
-                          child: Icon(Icons.refresh),
-                        ),
-                      ],
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text('Fetch data failed, Please try again'),
+                          GestureDetector(
+                            onTap: () {
+                              Provider.of<ItemsProvider>(
+                                context,
+                                listen: false,
+                              ).loadItems();
+                            },
+                            child: Icon(Icons.refresh),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                   : GridView.builder(

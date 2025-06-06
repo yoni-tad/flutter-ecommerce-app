@@ -1,6 +1,7 @@
+import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/provider/items_provider.dart';
 import 'package:ecommerce/provider/theme_provider.dart';
-import 'package:ecommerce/screens/home_screen.dart';
+import 'package:ecommerce/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,7 @@ void main() {
     SystemUiOverlayStyle(
       systemNavigationBarColor: Color(0xffFF4747),
       statusBarColor: Color(0xffFF4747),
-    )
+    ),
   );
   runApp(
     ChangeNotifierProvider(
@@ -27,7 +28,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => ItemsProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => ItemsProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
 
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
@@ -39,7 +43,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'eCommerce App',
             theme: theme.themeData,
-            home: HomeScreen(),
+            home: SplashScreen(),
           );
         },
       ),
