@@ -4,17 +4,18 @@ import 'package:ecommerce/provider/theme_provider.dart';
 import 'package:ecommerce/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
 
   await Supabase.initialize(
-    url: 'https://wbdlpfxoqrvuqqebgbqx.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZGxwZnhvcXJ2dXFxZWJnYnF4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkyMTQ1MTIsImV4cCI6MjA2NDc5MDUxMn0.kG6HtZ8_d5f00iGNbIk6hm5A3-0PXi6eR4egwfzm5vY',
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_KEY']!,
   );
 
   SystemChrome.setSystemUIOverlayStyle(

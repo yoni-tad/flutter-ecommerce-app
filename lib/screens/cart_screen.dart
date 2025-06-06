@@ -5,6 +5,7 @@ import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/screens/home_screen.dart';
 import 'package:ecommerce/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
@@ -232,16 +233,15 @@ class _CartScreenState extends State<CartScreen> {
                                             cartProvider.totalPrice.toString(),
                                         currency: 'USD',
                                         email: 'customer@example.com',
-                                        firstName: 'John',
-                                        lastName: 'Doe',
+                                        firstName: 'Yoni',
+                                        lastName: 'Tad',
                                         txRef:
                                             'TX-${DateTime.now().millisecondsSinceEpoch}',
-                                        title: 'Ecommerce Checkout',
+                                        title: 'eCommerce Checkout',
                                         context: context,
-                                        desc: 'Payment for items in cart',
+                                        desc: 'Test payment for items in cart',
                                         phone: '0900123456',
-                                        publicKey:
-                                            'CHAPUBK_TEST-cpUaKk9QLa2XYIc0uALJPyO7KdnD1nyd',
+                                        publicKey: dotenv.env['CHAPA_API_KEY']!,
                                         onPaymentFinished:
                                             (p0, p1, p2) => {
                                               Navigator.push(
